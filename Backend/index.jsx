@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>MAnthan Dubey</h1>
+    <h1>Manthan Dubey</h1>
 </body>
 </html>
