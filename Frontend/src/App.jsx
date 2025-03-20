@@ -6,8 +6,6 @@ import Blogs from "./pages/Blogs";
 import Creators from "./pages/Creators";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Login from "./components/Login";
-import Register from "./components/Register";
 
 const App = () => {
   return (
