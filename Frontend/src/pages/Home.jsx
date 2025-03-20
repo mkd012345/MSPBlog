@@ -1,15 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Home = () => {
   return (
     <div className="p-8 text-center">
-      <h1 className="text-4xl font-bold">Welcome to MSPBlog</h1>
+      <h1 className="text-4xl font-bold font-poppins">Welcome to MSPBlog</h1>
       <p className="mt-4">Explore the latest blogs and meet the creators.</p>
     </div>
   );
 };
+const TravelBlog = () => {
+  return (
+    <div className="flex flex-col md:flex-row gap-6 p-8">
+      <div className="w-full md:w-2/3">
+        <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+          <h2 className="text-2xl font-bold">Beautiful Beach</h2>
+          <h5 className="text-gray-500">Title description, Dec 7, 2025</h5>
+          <img src="/images/shivrajpure01.avif" alt="Beach" className="w-full h-64 object-cover rounded-lg mt-3" />
+          <p className="mt-2">Experience the serene beauty of the ocean.</p>
+        </div>
+        <div className="bg-white shadow-md p-5 rounded-lg mt-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+          <h2 className="text-2xl font-bold">Mountain Adventure</h2>
+          <h5 className="text-gray-500">Title description, Sep 2, 2025</h5>
+          <img src="/images/img1 (5).jpg" alt="Mountain" className="w-full h-64 object-cover rounded-lg mt-3" />
+          <p className="mt-2">Explore the breathtaking mountain landscapes.</p>
+        </div>
+      </div>
+      <div className="w-full md:w-1/4 flex flex-col gap-5">
+        <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+          <h2 className="text-xl font-bold">About Me</h2>
+          <a href="About.jsp">
+            <img src="/images/aboutme.webp" alt="Profile" className="h-24 mx-auto rounded-lg mt-3" />
+            <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
+          </a>
+        </div>
+        <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+          <h2 className="text-xl font-bold">Popular Posts</h2>
+          <img src="/images/img1 (1).jpg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 
 const data = [
   {
@@ -58,25 +93,42 @@ const HeroSection = () => {
   ];
   const [currentImage, setCurrentImage] = useState(0);
 
+  const prevImage = () => {
+    setCurrentImage((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const nextImage = () => {
+    setCurrentImage((prev) => (prev + 1) % images.length);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 1000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative w-full h-[450px] overflow-hidden">
-      {images.map((img, index) => (
-        <img
-          key={index}
-          src={img}
-          className={`absolute w-full h-full object-cover transition-opacity duration-1000 ${index === currentImage ? 'opacity-100' : 'opacity-0'}`}
-          alt="Hero"
-        />
-      ))}
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center ">
-      <h1 className="font-bold text-5xl leading-tight">
+    <div className="relative w-full h-[450px] overflow-hidden flex items-center">
+      <button
+        className="absolute left-4  text-white p-4 rounded-full shadow-lg z-10 "
+        onClick={prevImage}
+      >
+        <IoIosArrowBack size={28} />
+      </button>
+      <img
+        src={images[currentImage]}
+        className="w-full h-full object-cover transition-opacity duration-1000"
+        alt="Hero"
+      />
+      <button
+        className="absolute right-4  text-white p-4 rounded-full shadow-lg z-10 "
+        onClick={nextImage}
+      >
+        <IoIosArrowForward size={28} />
+      </button>
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center">
+        <h1 className="font-bold text-5xl leading-tight font-poppins">
           Ideas, Stories & Insights That<br />Inspire
         </h1>
         <p className="lead text-xl mt-2">
@@ -90,16 +142,19 @@ const HeroSection = () => {
   );
 };
 
+
 export default function App() {
   return (
     <div className="p-5 bg-gray-100 min-h-screen">
       <HeroSection />
       <Home />
+      <TravelBlog />
       <div className="flex justify-center gap-6 mt-5 flex-wrap">
         {data.map((item, index) => (
           <Card key={index} {...item} />
         ))}
       </div>
+      
     </div>
   );
 }
