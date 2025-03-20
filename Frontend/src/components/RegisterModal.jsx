@@ -55,6 +55,7 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
+
           {/* Password */}
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaLock className="text-blue-500 mr-3" />
