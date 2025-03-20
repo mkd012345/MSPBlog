@@ -6,6 +6,6 @@ export default defineConfig({
   base: "./",   // Base path fix
   server: {
     port: 5173,
-    open: false,
+    open: true,
   },
 });
