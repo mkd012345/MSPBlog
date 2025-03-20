@@ -1,28 +1,31 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./components/Home";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Blogs from "./pages/Blogs";
+import Creators from "./pages/Creators";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
 const App = () => {
   return (
-    <Router>
-      <div className="p-8">
-        {/* Navigation Links */}
-        <nav className="mb-4">
-          <Link to="/" className="mr-4 text-blue-500 hover:underline">Home</Link>
-          <Link to="/login" className="mr-4 text-blue-500 hover:underline">Login</Link>
-          <Link to="/register" className="text-blue-500 hover:underline">Register</Link>
-        </nav>
-
-        {/* Routes */}
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/creators" element={<Creators />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
       </div>
-    </Router>
+      <Footer />
+    </div>
   );
 };
 
