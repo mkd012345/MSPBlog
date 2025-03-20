@@ -7,6 +7,7 @@ import Creators from "./pages/Creators";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
+
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -18,8 +19,6 @@ const App = () => {
           <Route path="/creators" element={<Creators />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
       <Footer />
