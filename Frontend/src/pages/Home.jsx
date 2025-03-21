@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -51,13 +52,13 @@ const data = [
     title: "Cyber Security",
     author: "Manthan Dubey",
     category: "Technology",
-    image: "/images/img1 (2).jpg",
+    image: "/images/syber-security.jpg",
   },
   {
     title: "Virat Kohli",
     author: "Prince Chaudhri",
     category: "Sports",
-    image: "/images/img1 (3).jpg",
+    image: "/images/virat.webp",
   },
   {
     title: "Plant-Based Food",
@@ -67,23 +68,37 @@ const data = [
   },
 ];
 
-const Card = ({ title, author, category, image }) => (
-  <div className="bg-white rounded-2xl shadow-lg p-5 w-full md:w-1/4 text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-    <img src={image} alt={title} className="w-full h-52 object-cover rounded-lg" />
-    <div className="mt-4">
-      <span className="text-white text-sm px-3 py-1 rounded-full bg-red-500">#{category}</span>
-      <h2 className="text-xl font-bold mt-2">{title}</h2>
-      <p className="text-gray-600 mt-1">Adding extra security helps protect your system.</p>
-      <div className="flex items-center justify-center mt-3">
-        <FaUser className="text-gray-600 mr-2" />
-        <p className="text-gray-700">{author}</p>
+const Card = ({ title, author, category, image, link }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(link);
+  };
+
+  return (
+    <div
+      className="bg-white rounded-2xl shadow-lg p-5 w-full md:w-1/4 text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer overflow-hidden"
+      onClick={handleClick}
+    >
+      <img src={image} alt={title} className="w-full h-52 object-cover rounded-lg" />
+      <div className="mt-4">
+        <span className="text-white text-sm px-3 py-1 rounded-full bg-red-500">#{category}</span>
+        <h2 className="text-xl font-bold mt-2">{title}</h2>
+        <p className="text-gray-600 mt-1">Explore more details about this topic.</p>
+        <div className="flex items-center justify-center mt-3">
+          <FaUser className="text-gray-600 mr-2" />
+          <p className="text-gray-700">{author}</p>
+        </div>
+        <button 
+          className="mt-4 bg-green-500 text-white py-2 px-5 rounded-full shadow-md transform transition duration-300 hover:bg-red-600 hover:scale-105"
+          onClick={(e) => { e.stopPropagation(); handleClick(); }}
+        >
+          Read More →
+        </button>
       </div>
-      <button className="mt-4 bg-green-500 text-white py-2 px-5 rounded-full shadow-md transform transition duration-300 hover:bg-blue-600 hover:scale-105">
-        Read More →
-      </button>
     </div>
-  </div>
-);
+  );
+};
 
 const HeroSection = () => {
   const images = [
