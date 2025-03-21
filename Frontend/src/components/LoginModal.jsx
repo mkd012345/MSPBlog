@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import ForgotPassword from "../pages/forget"; // Import ForgotPassword Page
 
 const LoginModal = ({ onClose, onRegisterClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false); // Manage Forgot Password State
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,13 +13,16 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
     console.log("Password:", password);
     onClose();
   };
-  
+
+  // If Forgot Password is clicked, show ForgotPassword Component
+  if (showForgotPassword) {
+    return <ForgotPassword onClose={() => setShowForgotPassword(false)} />;
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 relative">
         
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
@@ -52,6 +57,17 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+          </div>
+
+          {/* Forgot Password Button */}
+          <div className="text-right text-sm">
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="text-blue-700 hover:underline"
+            >
+              Forgot Password?
+            </button>
           </div>
 
           {/* Buttons */}
