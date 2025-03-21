@@ -51,7 +51,7 @@ const data = [
     title: "Cyber Security",
     author: "Manthan Dubey",
     category: "Technology",
-    image: "/images/img1 (2).jpg",
+    image: "/images/tech_image.jpg",
   },
   {
     title: "Virat Kohli",
@@ -63,7 +63,7 @@ const data = [
     title: "Plant-Based Food",
     author: "Sahil Kumar",
     category: "Health",
-    image: "/images/img1 (5).jpg",
+    image: "/images/food.jpg",
   },
 ];
 
