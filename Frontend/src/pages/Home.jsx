@@ -13,43 +13,48 @@ const Home = () => {
 };
 const TravelBlog = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-10 p-8">
-      <div className="w-full md:w-2/3">
-        <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-          <h2 className="text-2xl font-bold">Beautiful Beach</h2>
-          <h5 className="text-gray-500">Title description, Dec 7, 2025</h5>
-          <img src="/images/shivrajpure01.avif" alt="Beach" className="w-full h-64 object-cover rounded-lg mt-3" />
-          <p className="mt-2">Experience the serene beauty of the ocean.</p>
+    <div className="flex flex-col items-center p-8">
+      <div className="w-full max-w-4xl flex flex-col md:flex-row gap-10">
+        <div className="w-full md:w-2/3 flex flex-col items-center">
+          <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl text-center w-full">
+            <h2 className="text-2xl font-bold">Beautiful Beach</h2>
+            <h5 className="text-gray-500">Title description, Dec 7, 2025</h5>
+            <img src="/images/shivrajpure01.avif" alt="Beach" className="w-full h-64 object-cover rounded-lg mt-3" />
+            <p className="mt-2">Experience the serene beauty of the ocean.</p>
+          </div>
+          <div className="bg-white shadow-md p-5 rounded-lg mt-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl text-center w-full">
+            <h2 className="text-2xl font-bold">Mountain Adventure</h2>
+            <h5 className="text-gray-500">Title description, Sep 2, 2025</h5>
+            <img src="/images/img1 (5).jpg" alt="Mountain" className="w-full h-64 object-cover rounded-lg mt-3" />
+            <p className="mt-2">Explore the breathtaking mountain landscapes.</p>
+          </div>
         </div>
-        <div className="bg-white shadow-md p-5 rounded-lg mt-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-          <h2 className="text-2xl font-bold">Mountain Adventure</h2>
-          <h5 className="text-gray-500">Title description, Sep 2, 2025</h5>
-          <img src="/images/img1 (5).jpg" alt="Mountain" className="w-full h-64 object-cover rounded-lg mt-3" />
-          <p className="mt-2">Explore the breathtaking mountain landscapes.</p>
-        </div>
-      </div>
-      <div className="w-full md:w-1/6 flex flex-col gap-5">
-        <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-          <h2 className="text-xl font-bold">About Me</h2>
-          <a href="About.jsp">
-            <img src="/images/aboutme.webp" alt="Profile" className="h-24 mx-auto rounded-lg mt-3" />
-            <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
-          </a>
-        </div>
-        <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-          <h2 className="text-xl font-bold">Popular Posts</h2>
-          <img src="/images/img1 (1).jpg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
-          <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
-        </div>
-        <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-          <h2 className="text-xl font-bold">Follow Me</h2>
-          <img src="/images/Follow.jpeg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
-          <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
+        <div className="w-full md:w-1/3 flex flex-col items-center gap-5">
+          <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl text-center w-full">
+            <h2 className="text-xl font-bold">About Me</h2>
+            <a href="About.jsp">
+              <img src="/images/aboutme.webp" alt="Profile" className="h-24 mx-auto rounded-lg mt-3" />
+              <p className="mt-2">Traveler and blogger sharing the best destinations.</p>
+            </a>
+          </div>
+          <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl text-center w-full">
+            <h2 className="text-xl font-bold">Popular Posts</h2>
+            <img src="/images/img1 (1).jpg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
+            <p className="mt-2">Traveler and blogger sharing the best destinations.</p>
+          </div>
+          <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl text-center w-full">
+            <h2 className="text-xl font-bold">Follow Me</h2>
+            <img src="/images/Follow.jpeg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
+            <p className="mt-2">Traveler and blogger sharing the best destinations.</p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+
+
 
 
 
@@ -72,6 +77,54 @@ const data = [
     category: "Health",
     image: "/images/food.jpg",
   },
+  {
+    title: "Plant-Based Food",
+    author: "Sahil Kumar",
+    category: "Health",
+    image: "/images/food.jpg",
+  },
+  {
+    title: "Cyber Security",
+    author: "Manthan Dubey",
+    category: "Technology",
+    image: "/images/tech_image.jpg",
+  },
+  {
+    title: "Plant-Based Food",
+    author: "Sahil Kumar",
+    category: "Health",
+    image: "/images/food.jpg",
+  },
+  {
+    title: "Plant-Based Food",
+    author: "Sahil Kumar",
+    category: "Health",
+    image: "/images/food.jpg",
+  },
+  {
+    title: "Cyber Security",
+    author: "Manthan Dubey",
+    category: "Technology",
+    image: "/images/tech_image.jpg",
+  },
+  {
+    title: "Virat Kohli",
+    author: "Prince Chaudhri",
+    category: "Sports",
+    image: "/images/virat.webp",
+  },
+  {
+    title: "Plant-Based Food",
+    author: "Sahil Kumar",
+    category: "Health",
+    image: "/images/food.jpg",
+  },
+  {
+    title: "Plant-Based Food",
+    author: "Sahil Kumar",
+    category: "Health",
+    image: "/images/food.jpg",
+  },
 ];
 
 const Card = ({ title, author, category, image, link }) => {
@@ -83,10 +136,10 @@ const Card = ({ title, author, category, image, link }) => {
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-lg p-5 w-full md:w-1/4 text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer overflow-hidden"
+      className="bg-white rounded-2xl shadow-lg p-5 w-full md:w-1/5 text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer overflow-hidden"
       onClick={handleClick}
     >
-      <img src={image} alt={title} className="w-full h-52 object-cover rounded-lg" />
+      <img src={image} alt={title} className="w-full h-60 object-cover rounded-lg" />
       <div className="mt-4">
         <span className="text-white text-sm px-3 py-1 rounded-full bg-red-500">#{category}</span>
         <h2 className="text-xl font-bold mt-2">{title}</h2>
