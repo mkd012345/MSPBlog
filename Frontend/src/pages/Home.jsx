@@ -57,7 +57,7 @@ const data = [
     title: "Virat Kohli",
     author: "Prince Chaudhri",
     category: "Sports",
-    image: "/images/img1 (3).jpg",
+    image: "/images/virat.webp",
   },
   {
     title: "Plant-Based Food",
