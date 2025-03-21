@@ -13,7 +13,7 @@ const Home = () => {
 };
 const TravelBlog = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-6 p-8">
+    <div className="flex flex-col md:flex-row gap-10 p-8">
       <div className="w-full md:w-2/3">
         <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-2xl font-bold">Beautiful Beach</h2>
@@ -28,17 +28,23 @@ const TravelBlog = () => {
           <p className="mt-2">Explore the breathtaking mountain landscapes.</p>
         </div>
       </div>
-      <div className="w-full md:w-1/4 flex flex-col gap-5">
-        <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+      <div className="w-full md:w-1/6 flex flex-col gap-5">
+        <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-xl font-bold">About Me</h2>
           <a href="About.jsp">
             <img src="/images/aboutme.webp" alt="Profile" className="h-24 mx-auto rounded-lg mt-3" />
             <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
           </a>
         </div>
-        <div className="bg-white shadow-md p-5 rounded-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-xl font-bold">Popular Posts</h2>
           <img src="/images/img1 (1).jpg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
+          <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
+        </div>
+        <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+          <h2 className="text-xl font-bold">Follow Me</h2>
+          <img src="/images/Follow.jpeg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
+          <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
         </div>
       </div>
     </div>
