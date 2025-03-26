@@ -1,95 +1,81 @@
 import React, { useState } from "react";
 
 const CreateBlog = () => {
-  const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
-  const [about, setAbout] = useState("");
-
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      category,
-      title,
-      image,
-      about,
-    });
-    alert("Blog posted successfully!");
+    console.log("Blog Submitted:", { title, content, image });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#90CAF9]">
-      <div className="bg-white/80 p-10 rounded-lg shadow-lg w-[800px] h-[450px] overflow-hidden">
-        <h1 className="text-3xl font-bold mb-6 text-center">Create Blog</h1>
-
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-          {/* Category */}
-          <div>
-            <label className="block mb-2">Category</label>
-            <select
-              className="w-full p-2 border rounded-lg"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
-            >
-              <option value="">Select Category</option>
-              <option value="Tech">Tech</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Travel">Travel</option>
-            </select>
-          </div>
-
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-100 to-gray-200">
+      
+      {/* Main Content */}
+      <div className="flex-grow flex items-center justify-center p-6">
+        <div className="bg-white shadow-2xl rounded-xl p-10 w-full max-w-3xl h-auto hover:shadow-blue-300 transition duration-300">
+          
           {/* Title */}
-          <div>
-            <label className="block mb-2">Title</label>
-            <input
-              type="text"
-              placeholder="Enter Blog Title"
-              className="w-full p-2 border rounded-lg"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
+          <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
+            📝 Create a New Blog
+          </h1>
 
-          {/* Blog Image */}
-          <div>
-            <label className="block mb-2">Blog Image</label>
-            <input
-              type="file"
-              className="w-full p-2 border rounded-lg"
-              onChange={handleImageChange}
-              required
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Blog Title */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">Title</label>
+              <input
+                type="text"
+                placeholder="Enter blog title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                required
+              />
+            </div>
 
-          {/* About */}
-          <div>
-            <label className="block mb-2">About</label>
-            <textarea
-              placeholder="Write something about your blog"
-              className="w-full p-2 border rounded-lg h-[100px]"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-              required
-            />
-          </div>
+            {/* Blog Content */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">Content</label>
+              <textarea
+                placeholder="Write your blog content..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows="5"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none"
+                required
+              />
+            </div>
 
-          {/* Post Button */}
-          <div className="col-span-2">
-            <button
-              type="submit"
-              className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
-            >
-              Post Blog
-            </button>
-          </div>
-        </form>
+            {/* Image Upload */}
+            <div className="flex flex-col gap-2">
+              <label className="text-gray-700 font-medium">Upload Image</label>
+              <input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-blue-700 hover:scale-105 transition duration-300"
+              >
+                🚀 Publish Blog
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white text-center py-4">
+        © 2025 MSPBlog | All Rights Reserved
+      </footer>
     </div>
   );
 };
