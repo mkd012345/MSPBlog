@@ -78,48 +78,7 @@ const data = [
     category: "Health",
     image: "/images/food.jpg",
   },
-  {
-    title: "Cyber Security",
-    author: "Manthan Dubey",
-    category: "Technology",
-    image: "/images/tech_image.jpg",
-  },
-  {
-    title: "Plant-Based Food",
-    author: "Sahil Kumar",
-    category: "Health",
-    image: "/images/food.jpg",
-  },
-  {
-    title: "Plant-Based Food",
-    author: "Sahil Kumar",
-    category: "Health",
-    image: "/images/food.jpg",
-  },
-  {
-    title: "Cyber Security",
-    author: "Manthan Dubey",
-    category: "Technology",
-    image: "/images/tech_image.jpg",
-  },
-  {
-    title: "Virat Kohli",
-    author: "Prince Chaudhri",
-    category: "Sports",
-    image: "/images/virat.webp",
-  },
-  {
-    title: "Plant-Based Food",
-    author: "Sahil Kumar",
-    category: "Health",
-    image: "/images/food.jpg",
-  },
-  {
-    title: "Plant-Based Food",
-    author: "Sahil Kumar",
-    category: "Health",
-    image: "/images/food.jpg",
-  },
+  
 ];
 
 const Card = ({ title, author, category, image, link }) => {
@@ -223,7 +182,6 @@ export default function App() {
           <Card key={index} {...item} />
         ))}
       </div>
-      
     </div>
   );
 }
