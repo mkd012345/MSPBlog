@@ -71,13 +71,7 @@ const CreateBlog = () => {
           </form>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white text-center py-4">
-        © 2025 MSPBlog | All Rights Reserved
-      </footer>
     </div>
   );
-};
-
+}
 export default CreateBlog;
