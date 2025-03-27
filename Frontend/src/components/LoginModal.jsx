@@ -23,6 +23,7 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 relative">
         
+        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
@@ -30,16 +31,18 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
           ✖
         </button>
 
-        <h2 className="text-2xl font-bold text-center mb-6">LOGIN</h2>
+        {/* Login Header */}
+        <h2 className="text-3xl font-bold text-center mb-6 text-blue-700">LOGIN</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          
           {/* Email */}
-          <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
+          <div className="flex items-center border rounded-lg px-4 py-3 bg-gray-100">
             <FaEnvelope className="text-red-500 mr-3" />
             <input
               type="email"
-              placeholder="EMAIL"
-              className="w-full outline-none"
+              placeholder="Enter your email"
+              className="w-full outline-none bg-transparent"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -47,47 +50,40 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
           </div>
 
           {/* Password */}
-          <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
+          <div className="flex items-center border rounded-lg px-4 py-3 bg-gray-100">
             <FaLock className="text-blue-500 mr-3" />
             <input
               type="password"
-              placeholder="PASSWORD"
-              className="w-full outline-none"
+              placeholder="Enter your password"
+              className="w-full outline-none bg-transparent"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          {/* Forgot Password Button */}
-          <div className="text-right text-sm">
+          {/* Forgot Password */}
+          <div className="text-right">
             <button
               type="button"
               onClick={() => setShowForgotPassword(true)}
-              className="text-blue-700 hover:underline"
+              className="text-sm text-blue-700 hover:underline"
             >
               Forgot Password?
             </button>
           </div>
 
-          {/* Buttons */}
-          <div className="flex justify-between">
+          {/* Login Button */}
+          <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 w-full"
             >
               Login
             </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Cancel
-            </button>
           </div>
 
-          {/* Link to Register */}
+          {/* Register Link */}
           <div className="text-center text-sm mt-4">
             <span>Don't have an account? </span>
             <button
