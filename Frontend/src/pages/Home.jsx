@@ -31,7 +31,7 @@ const TravelBlog = () => {
       <div className="w-full md:w-1/6 flex flex-col gap-5">
         <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-xl font-bold">About Me</h2>
-          <a href="About.jsp">
+          <a href="About.jsx">
             <img src="/images/aboutme.webp" alt="Profile" className="h-24 mx-auto rounded-lg mt-3" />
             <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
           </a>
