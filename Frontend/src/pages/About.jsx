@@ -64,8 +64,6 @@ const About = () => {
               Contact
             </a>
           </div>
-
-          
         </div>
       </div>
     </div>
