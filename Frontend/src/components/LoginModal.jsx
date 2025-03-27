@@ -14,7 +14,7 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
     onClose();
   };
 
-  // If Forgot Password is clicked, show ForgotPassword Component
+  // If Forgot Password is clicked, show ForgotPassword Component 
   if (showForgotPassword) {
     return <ForgotPassword onClose={() => setShowForgotPassword(false)} />;
   }
