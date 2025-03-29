@@ -6,6 +6,7 @@ import Blogs from "./pages/Blogs";
 import CreateBlog from "./pages/CreateBlog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import BlogDetails from './pages/BlogDetails';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/CreateBlog" element={<CreateBlog />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/blog/:id" element={<BlogDetails />} />
         </Routes>
       </div>
       <Footer />
