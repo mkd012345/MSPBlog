@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
 import { FaHeart, FaRegComment, FaSun, FaMoon } from 'react-icons/fa';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  WhatsappShareButton,
+  EmailShareButton
+} from 'react-share';
+import {
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+  WhatsappIcon,
+  EmailIcon
+} from 'react-share';
 
 const BlogDetails = () => {
   const [likes, setLikes] = useState(0);
@@ -33,16 +47,20 @@ const BlogDetails = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  return (
-    <div className={`min-h-screen p-10 transition duration-300 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+  // ✅ Share URL & Title
+  const shareUrl = window.location.href; 
+  const title = "Check out this amazing blog on MSPBlog!";
 
+  return (
+    <div className={`min-h-screen p-10 transition duration-300 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
+      
       {/* ✅ Header Section */}
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-4xl font-bold">Mahabharat</h1>
+        <div className="flex justify-between items-center mb-10">
+          <h1 className="text-5xl font-extrabold tracking-tight">Mahabharat</h1>
           <button
             onClick={toggleDarkMode}
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+            className="flex items-center gap-2 bg-blue-500 text-white px-5 py-3 rounded-full hover:bg-blue-600 transition transform hover:scale-105 shadow-lg"
           >
             {isDarkMode ? <FaSun /> : <FaMoon />} 
             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
@@ -50,68 +68,70 @@ const BlogDetails = () => {
         </div>
 
         {/* ✅ Author Section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
           <img
             src="/images/user.png"
             alt="Author"
-            className="w-14 h-14 rounded-full"
+            className="w-20 h-20 rounded-full border-4 border-blue-500 shadow-lg"
           />
           <div>
-            <p className="font-semibold">Manthan Kr</p>
+            <p className="font-bold text-xl">Manthan Kr</p>
             <p className="text-sm text-gray-500">{new Date().toLocaleDateString()}</p>
           </div>
         </div>
 
         {/* ✅ Blog Image */}
-        <img
-          src="/images/mahabharat.jpg"
-          alt="Mahabharat Image"
-          className="w-full h-[600px] object-cover mt-6 rounded-xl shadow-lg"
-        />
+        <div className="mt-10">
+          <img
+            src="/images/mahabharat.jpg"
+            alt="Mahabharat Image"
+            className="w-full h-[600px] object-cover rounded-xl shadow-lg transition transform hover:scale-105"
+          />
+        </div>
 
         {/* ✅ Blog Content */}
-        <div className="mt-8">
-          <p className="text-2xl font-semibold">The Mahabharata</p>
-          <p className="leading-relaxed mt-4">
+        <div className={`mt-12 p-10 rounded-lg shadow-lg transition ${isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-white text-gray-900'}`}>
+          <h2 className="text-3xl font-bold mb-4">The Mahabharata</h2>
+          <p className="leading-relaxed text-lg">
             The Mahabharata is one of the two major Sanskrit epics of ancient India.
             It narrates the events of the Kurukshetra War, a war of succession between
             two groups of princely cousins, the Kauravas and the Pandavas.
           </p>
-          <p className="leading-relaxed mt-4">
+          <p className="leading-relaxed text-lg mt-6">
             It also contains philosophical and devotional material, including the Bhagavad Gita.
           </p>
         </div>
 
         {/* ✅ Like & Comment Section */}
-        <div className="flex items-center gap-6 mt-8">
+        <div className="flex justify-between items-center mt-12">
           <button
             onClick={handleLike}
-            className={`flex items-center gap-2 text-xl transition ${isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-400'}`}
+            className={`flex items-center gap-3 text-2xl transition ${isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-400'}`}
           >
             <FaHeart />
             <span>{likes} {likes === 1 ? 'Like' : 'Likes'}</span>
           </button>
 
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-3 text-2xl text-gray-500">
             <FaRegComment />
             <span>{comments.length} {comments.length === 1 ? 'Comment' : 'Comments'}</span>
           </div>
         </div>
 
         {/* ✅ Comment Input */}
-        <div className="mt-8">
-          <h3 className="text-2xl font-semibold">Comments</h3>
-          <div className="mt-4 flex gap-4">
+        <div className="mt-10">
+          <h3 className="text-2xl font-bold mb-4">Leave a Comment</h3>
+          <div className="flex gap-4">
             <input
               type="text"
               placeholder="Write a comment..."
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className={`w-full p-3 border rounded-lg focus:outline-none ${isDarkMode ? 'bg-gray-700 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-600'}`}
+              className={`w-full p-4 border rounded-lg focus:outline-none shadow-md transition ${isDarkMode ? 'bg-gray-700 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-600'}`}
             />
             <button
               onClick={handleCommentSubmit}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg"
             >
               Post
             </button>
@@ -119,18 +139,44 @@ const BlogDetails = () => {
         </div>
 
         {/* ✅ Comment List */}
-        <ul className="mt-6 space-y-4">
+        <ul className="mt-8 space-y-6">
           {comments.map((comment, index) => (
             <li
               key={index}
-              className={`p-4 border rounded-lg shadow-md transition ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-gray-50 text-gray-900'}`}
+              className={`p-6 rounded-lg shadow-md transition transform hover:scale-105 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
             >
-              <p className="font-semibold">User</p>
+              <p className="font-bold">User</p>
               <p className="text-sm text-gray-500">{comment.timestamp}</p>
-              <p className="mt-2">{comment.text}</p>
+              <p className="mt-3">{comment.text}</p>
             </li>
           ))}
         </ul>
+
+        {/* ✅ Share Section */}
+        <div className="mt-12">
+          <h3 className="text-3xl font-bold mb-6">Share this blog</h3>
+          <div className="flex gap-6">
+            <FacebookShareButton url={shareUrl} quote={title}>
+              <FacebookIcon size={50} round />
+            </FacebookShareButton>
+
+            <TwitterShareButton url={shareUrl} title={title}>
+              <TwitterIcon size={50} round />
+            </TwitterShareButton>
+
+            <LinkedinShareButton url={shareUrl} title={title}>
+              <LinkedinIcon size={50} round />
+            </LinkedinShareButton>
+
+            <WhatsappShareButton url={shareUrl} title={title}>
+              <WhatsappIcon size={50} round />
+            </WhatsappShareButton>
+
+            <EmailShareButton url={shareUrl} subject={title} body="Check out this amazing blog!">
+              <EmailIcon size={50} round />
+            </EmailShareButton>
+          </div>
+        </div>
       </div>
     </div>
   );
