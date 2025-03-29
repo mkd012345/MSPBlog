@@ -18,13 +18,21 @@ const TravelBlog = () => {
         <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-2xl font-bold">Beautiful Beach</h2>
           <h5 className="text-gray-500">Title description, Dec 7, 2025</h5>
-          <img src="/images/shivrajpure01.avif" alt="Beach" className="w-full h-64 object-cover rounded-lg mt-3 " />
+          <img
+            src="/images/shivrajpure01.avif"
+            alt="Beach"
+            className="w-full h-64 object-cover rounded-lg mt-3 "
+          />
           <p className="mt-2">Experience the serene beauty of the ocean.</p>
         </div>
         <div className="bg-white shadow-md p-5 rounded-lg mt-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-2xl font-bold">Mountain Adventure</h2>
           <h5 className="text-gray-500">Title description, Sep 2, 2025</h5>
-          <img src="/images/img1 (5).jpg" alt="Mountain" className="w-full h-64 object-cover rounded-lg mt-3" />
+          <img
+            src="/images/img1 (5).jpg"
+            alt="Mountain"
+            className="w-full h-64 object-cover rounded-lg mt-3"
+          />
           <p className="mt-2">Explore the breathtaking mountain landscapes.</p>
         </div>
       </div>
@@ -32,26 +40,39 @@ const TravelBlog = () => {
         <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-xl font-bold">About Me</h2>
           <a href="About.jsx">
-            <img src="/images/aboutme.webp" alt="Profile" className="h-24 mx-auto rounded-lg mt-3" />
-            <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
+            <img
+              src="/images/aboutme.webp"
+              alt="Profile"
+              className="h-24 mx-auto rounded-lg mt-3"
+            />
+            <p className="mt-2 text-center">
+              Traveler and blogger sharing the best destinations.
+            </p>
           </a>
         </div>
         <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-xl font-bold">Popular Posts</h2>
-          <img src="/images/img1 (1).jpg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
-          <p className="mt-2 text-center">Traveler and blogger sharing the best destinations.</p>
+          <img
+            src="/images/img1 (1).jpg"
+            alt="Popular Post"
+            className="w-full h-32 object-cover rounded-lg mt-3"
+          />
+          <p className="mt-2 text-center">
+            Traveler and blogger sharing the best destinations.
+          </p>
         </div>
         <div className="bg-white shadow-md p-5 rounded-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
           <h2 className="text-xl font-bold">Follow Me</h2>
-          <img src="/images/Follow.jpeg" alt="Popular Post" className="w-full h-32 object-cover rounded-lg mt-3" />
-      
+          <img
+            src="/images/Follow.jpeg"
+            alt="Popular Post"
+            className="w-full h-32 object-cover rounded-lg mt-3"
+          />
         </div>
       </div>
     </div>
   );
 };
-
-
 
 const data = [
   {
@@ -78,7 +99,6 @@ const data = [
     category: "Health",
     image: "/images/food.jpg",
   },
-  
 ];
 
 const Card = ({ title, author, category, image, link }) => {
@@ -93,18 +113,29 @@ const Card = ({ title, author, category, image, link }) => {
       className="bg-white rounded-2xl shadow-lg p-5 w-full md:w-1/5 text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer overflow-hidden"
       onClick={handleClick}
     >
-      <img src={image} alt={title} className="w-full h-60 object-cover rounded-lg " />
+      <img
+        src={image}
+        alt={title}
+        className="w-full h-60 object-cover rounded-lg "
+      />
       <div className="mt-4">
-        <span className="text-white text-sm px-3 py-1 rounded-full bg-red-500">#{category}</span>
+        <span className="text-white text-sm px-3 py-1 rounded-full bg-red-500">
+          #{category}
+        </span>
         <h2 className="text-xl font-bold mt-2">{title}</h2>
-        <p className="text-gray-600 mt-1">Explore more details about this topic.</p>
+        <p className="text-gray-600 mt-1">
+          Explore more details about this topic.
+        </p>
         <div className="flex items-center justify-center mt-3">
           <FaUser className="text-gray-600 mr-2" />
           <p className="text-gray-700">{author}</p>
         </div>
-        <button 
+        <button
           className="mt-4 bg-green-500 text-white py-2 px-5 rounded-full shadow-md transform transition duration-300 hover:bg-red-600 hover:scale-105"
-          onClick={(e) => { e.stopPropagation(); handleClick(); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick();
+          }}
         >
           Read More →
         </button>
@@ -157,10 +188,13 @@ const HeroSection = () => {
       </button>
       <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center">
         <h1 className="font-bold text-5xl leading-tight font-poppins">
-          Ideas, Stories & Insights That<br />Inspire
+          Ideas, Stories & Insights That
+          <br />
+          Inspire
         </h1>
         <p className="lead text-xl mt-2">
-          Dive into a world of creativity, knowledge, and thought-provoking discussions.
+          Dive into a world of creativity, knowledge, and thought-provoking
+          discussions.
         </p>
         <p className="text-xl mt-2">
           <FaUser className="inline mr-2" /> By Manthan Dubey
@@ -169,7 +203,6 @@ const HeroSection = () => {
     </div>
   );
 };
-
 
 export default function App() {
   return (
