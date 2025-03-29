@@ -35,6 +35,7 @@ const Navbar = () => {
           <Link to="/CreateBlog" className="text-black hover:text-blue-500">CREATE-BLOG</Link>   {/* ✅ Creators Page */}
           <Link to="/about" className="text-black hover:text-blue-500">ABOUT</Link>
           <Link to="/contact" className="text-black hover:text-blue-500">CONTACT</Link>
+          
         </div>
 
         {/* Login Button */}
