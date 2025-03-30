@@ -20,6 +20,8 @@ const Blogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
 
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
   useEffect(() => {
     const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
     setBookmarks(savedBookmarks);
@@ -39,11 +41,13 @@ const Blogs = () => {
     localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
   };
 
-  const filteredData = data.filter(
-    (item) =>
+  // 🛠️ Filter blogs based on category
+  const filteredData = data
+    .filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.tag.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    )
+    .filter((item) => selectedCategory === 'All' || item.tag === selectedCategory);
 
   const totalPages = Math.ceil(filteredData.length / blogsPerPage);
 
@@ -62,6 +66,26 @@ const Blogs = () => {
         <Link to="/saved-blogs" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
           View Saved Blogs
         </Link>
+      </div>
+
+      {/* Category Filter */}
+      <div className="flex gap-4 mb-6">
+        {['All', 'Food', 'Epic', 'Mythology', 'Festival', 'Travel', 'Technology', 'Cuisine', 'Tech'].map((category) => (
+          <button
+            key={category}
+            onClick={() => {
+              setSelectedCategory(category);
+              setCurrentPage(1);
+            }}
+            className={`px-4 py-2 rounded-lg transition ${
+              selectedCategory === category
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-300 text-gray-700 hover:bg-blue-400 hover:text-white'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
       </div>
 
       {/* Search Bar */}
