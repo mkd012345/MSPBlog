@@ -22,7 +22,7 @@ const MyProfile = () => {
     if (!loggedInUser) return;
 
     const formData = new FormData();
-    formData.append("id", loggedInUser.id); // 👈 ID pass kar rahe hain
+    formData.append("id", loggedInUser.id);
     formData.append("username", newUsername);
     if (newProfileImage) {
       formData.append("profile_image", newProfileImage);
@@ -54,12 +54,13 @@ const MyProfile = () => {
     }
   };
 
-  if (!loggedInUser) return <div>Loading...</div>;
+  if (!loggedInUser) return <div className="text-center text-blue-600">Loading...</div>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold text-center text-blue-600">My Profile</h2>
-      <div className="flex flex-col items-center mt-6">
+    <div className="container mx-auto p-8">
+      <h2 className="text-4xl font-bold text-center text-blue-600 mb-6">My Profile</h2>
+      <div className="flex flex-col items-center space-y-6 bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
+        {/* Profile Image */}
         <img
           src={
             newProfileImage
@@ -67,20 +68,34 @@ const MyProfile = () => {
               : loggedInUser.profile_image
           }
           alt="Profile"
-          className="w-32 h-32 rounded-full mb-4"
+          className="w-32 h-32 rounded-full mb-4 border-4 border-blue-500"
         />
-        <input type="file" accept="image/*" onChange={handleProfileImageChange} className="mb-4" />
-        <div className="flex items-center mb-4">
-          <FaUser className="text-gray-500 mr-2" />
+
+        {/* Profile Image Upload */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleProfileImageChange}
+          className="border border-gray-300 rounded-md p-2"
+        />
+
+        {/* Username */}
+        <div className="flex items-center space-x-2 mb-6">
+          <FaUser className="text-gray-500 text-xl" />
           <input
             type="text"
             value={newUsername}
             onChange={(e) => setNewUsername(e.target.value)}
-            className="border p-2 rounded"
+            className="border border-gray-300 p-2 rounded-md w-full"
             placeholder="Enter new username"
           />
         </div>
-        <button onClick={handleSaveChanges} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+
+        {/* Save Changes Button */}
+        <button
+          onClick={handleSaveChanges}
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+        >
           Save Changes
         </button>
       </div>
