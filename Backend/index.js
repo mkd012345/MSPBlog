@@ -1,13 +1,19 @@
 const express = require("express");
-const app = express();
-const authRoutes = require("./routes/authRoutes");
+const path = require("path");
 const cors = require("cors");
+const app = express();
 
+// Routes
+const authRoutes = require("./routes/authRoutes");
+
+// Middleware
 app.use(cors());
 app.use(express.json());
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve uploaded files
 app.use("/api/auth", authRoutes);
 
-
+// Start the server
 const PORT = 5000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
