@@ -6,29 +6,30 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null); // for preview only
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = {
-      username,
-      email,
-      password,
-      profile_image: profileImage || "", // Store image URL if uploaded
-    };
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    if (profileImage) {
+      formData.append("profile_image", profileImage);
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: formData,
       });
 
       const data = await response.json();
       if (response.ok) {
         alert("Registration successful!");
-        onClose(); // Close registration modal
-        onLoginClick(); // Trigger login modal after registration
+        onClose();
+        onLoginClick();
       } else {
         alert(data.error || "Registration failed");
       }
@@ -41,7 +42,8 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileImage(URL.createObjectURL(file)); // Only preview, not upload
+      setProfileImage(file);
+      setPreviewImage(URL.createObjectURL(file)); // for showing preview
     }
   };
 
@@ -57,7 +59,7 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
 
         <h2 className="text-2xl font-bold text-center mb-6">REGISTER</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaUser className="text-green-500 mr-3" />
             <input
@@ -104,10 +106,10 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
-          {profileImage && (
+          {previewImage && (
             <div className="mt-4 text-center">
               <img
-                src={profileImage}
+                src={previewImage}
                 alt="Profile Preview"
                 className="w-32 h-32 rounded-full mx-auto"
               />
@@ -125,6 +127,7 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             <button
               onClick={onLoginClick}
               className="text-blue-700 hover:underline"
+              type="button"
             >
               Login Here
             </button>
