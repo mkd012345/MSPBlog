@@ -7,29 +7,47 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Profile Image:", profileImage);
 
-    // Handle form submission (send data to backend, including the image)
-    onClose();
+    const userData = {
+      username,
+      email,
+      password,
+      profile_image: profileImage || "", // Store image URL if uploaded
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Registration successful!");
+        onClose(); // Close registration modal
+        onLoginClick(); // Trigger login modal after registration
+      } else {
+        alert(data.error || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Register Error:", error);
+      alert("Something went wrong!");
+    }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileImage(URL.createObjectURL(file)); // Preview image locally
+      setProfileImage(URL.createObjectURL(file)); // Only preview, not upload
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 relative">
-
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
@@ -40,7 +58,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
         <h2 className="text-2xl font-bold text-center mb-6">REGISTER</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username */}
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaUser className="text-green-500 mr-3" />
             <input
@@ -53,7 +70,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
-          {/* Email */}
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaEnvelope className="text-red-500 mr-3" />
             <input
@@ -66,7 +82,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
-          {/* Password */}
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaLock className="text-blue-500 mr-3" />
             <input
@@ -79,7 +94,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
-          {/* Profile Image */}
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaCamera className="text-gray-500 mr-3" />
             <input
@@ -90,7 +104,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
-          {/* Image Preview */}
           {profileImage && (
             <div className="mt-4 text-center">
               <img
@@ -101,7 +114,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             </div>
           )}
 
-          {/* Buttons */}
           <div className="flex justify-between">
             <button
               type="submit"
