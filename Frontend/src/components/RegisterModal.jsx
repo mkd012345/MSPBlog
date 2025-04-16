@@ -1,17 +1,28 @@
 import { useState } from "react";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock, FaCamera } from "react-icons/fa";
 
 const RegisterModal = ({ onClose, onLoginClick }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Username:", username);
     console.log("Email:", email);
     console.log("Password:", password);
+    console.log("Profile Image:", profileImage);
+
+    // Handle form submission (send data to backend, including the image)
     onClose();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(URL.createObjectURL(file)); // Preview image locally
+    }
   };
 
   return (
@@ -55,7 +66,6 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
             />
           </div>
 
-
           {/* Password */}
           <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
             <FaLock className="text-blue-500 mr-3" />
@@ -68,6 +78,28 @@ const RegisterModal = ({ onClose, onLoginClick }) => {
               required
             />
           </div>
+
+          {/* Profile Image */}
+          <div className="flex items-center border rounded px-3 py-2 bg-gray-100">
+            <FaCamera className="text-gray-500 mr-3" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full outline-none"
+            />
+          </div>
+
+          {/* Image Preview */}
+          {profileImage && (
+            <div className="mt-4 text-center">
+              <img
+                src={profileImage}
+                alt="Profile Preview"
+                className="w-32 h-32 rounded-full mx-auto"
+              />
+            </div>
+          )}
 
           {/* Buttons */}
           <div className="flex justify-between">
