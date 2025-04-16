@@ -32,18 +32,27 @@ const Navbar = () => {
         <div className="flex space-x-6">
           <Link to="/" className="text-black hover:text-blue-500">HOME</Link>
           <Link to="/blogs" className="text-black hover:text-blue-500">BLOGS</Link>
-          <Link to="/CreateBlog" className="text-black hover:text-blue-500">CREATE-BLOG</Link>   {/* ✅ Creators Page */}
+          <Link to="/CreateBlog" className="text-black hover:text-blue-500">CREATE-BLOG</Link>
           <Link to="/about" className="text-black hover:text-blue-500">ABOUT</Link>
           <Link to="/contact" className="text-black hover:text-blue-500">CONTACT</Link>
         </div>
 
-        {/* Login Button */}
-        <button
-          onClick={() => setIsLoginOpen(true)}
-          className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
-        >
-          LOGIN
-        </button>
+        {/* Login & Register Buttons */}
+        <div className="flex space-x-4">
+          <button
+            onClick={() => setIsLoginOpen(true)}
+            className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+          >
+            LOGIN
+          </button>
+
+          <button
+            onClick={openRegister}
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+          >
+            REGISTER
+          </button>
+        </div>
       </div>
 
       {/* Modals */}
@@ -53,7 +62,7 @@ const Navbar = () => {
           onRegisterClick={openRegister}
         />
       )}
-      
+
       {isRegisterOpen && (
         <RegisterModal
           onClose={() => setIsRegisterOpen(false)}
