@@ -1,24 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const path = require("path");
-const { registerUser, loginUser } = require("../controllers/userController");
 
-// Set storage engine for multer
+const {
+  registerUser,
+  loginUser,
+  updateProfile,
+} = require("../controllers/userController");
+
+// Multer setup
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Folder where images will be saved
-  },
-  filename: function (req, file, cb) {
-    const uniqueName = Date.now() + "-" + file.originalname;
-    cb(null, uniqueName);
-  },
+  destination: (req, file, cb) => cb(null, "uploads/"),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
 });
+const upload = multer({ storage });
 
-const upload = multer({ storage: storage });
-
-// 👉 Use `upload.single()` for profile image upload in register
+// Routes
 router.post("/register", upload.single("profile_image"), registerUser);
 router.post("/login", loginUser);
+router.post("/updateProfile", upload.single("profile_image"), updateProfile); // 👈 middleware hata diya
 
 module.exports = router;
