@@ -6,6 +6,7 @@ const {
   registerUser,
   loginUser,
   updateProfile,
+  deleteAccount,
 } = require("../controllers/userController");
 
 // Multer setup
@@ -19,5 +20,6 @@ const upload = multer({ storage });
 router.post("/register", upload.single("profile_image"), registerUser);
 router.post("/login", loginUser);
 router.post("/updateProfile", upload.single("profile_image"), updateProfile); // 👈 middleware hata diya
+router.delete("/deleteAccount/:id", deleteAccount);
 
 module.exports = router;

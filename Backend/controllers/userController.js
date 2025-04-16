@@ -86,3 +86,22 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+
+// Delete Account
+exports.deleteAccount = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Delete user from database
+    const result = await pool.query("DELETE FROM users WHERE id = $1 RETURNING id", [userId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Account deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
