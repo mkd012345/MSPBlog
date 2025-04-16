@@ -105,3 +105,34 @@ exports.deleteAccount = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+
+// Change Password
+exports.changePassword = async (req, res) => {
+  const { id, oldPassword, newPassword } = req.body;
+
+  try {
+    // User check
+    const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const user = result.rows[0];
+
+    // Old password check
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Old password is incorrect" });
+    }
+
+    // New password hash & update
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await pool.query("UPDATE users SET password = $1 WHERE id = $2", [hashedNewPassword, id]);
+
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (err) {
+    console.error("Error changing password:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
