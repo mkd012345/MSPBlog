@@ -7,6 +7,7 @@ const {
   loginUser,
   updateProfile,
   deleteAccount,
+  changePassword,
 } = require("../controllers/userController");
 
 // Multer setup
@@ -21,5 +22,6 @@ router.post("/register", upload.single("profile_image"), registerUser);
 router.post("/login", loginUser);
 router.post("/updateProfile", upload.single("profile_image"), updateProfile); // 👈 middleware hata diya
 router.delete("/deleteAccount/:id", deleteAccount);
+router.post("/changePassword", changePassword);
 
 module.exports = router;
