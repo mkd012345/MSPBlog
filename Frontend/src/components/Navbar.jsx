@@ -74,7 +74,7 @@ const Navbar = () => {
                 className="flex items-center space-x-2 bg-black text-white px-4 py-2 rounded-lg"
               >
                 <img
-                  src={user.profile_image || "default-profile.png"} // Show profile image
+                  src={user.profile_image || "/default-profile.png"} // Fallback to default profile image
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
