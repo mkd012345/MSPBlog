@@ -1,20 +1,38 @@
 import { useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import ForgotPassword from "../pages/forget"; // Import ForgotPassword Page
+import ForgotPassword from "../pages/forget";
 
-const LoginModal = ({ onClose, onRegisterClick }) => {
-  const [email, setEmail] = useState("");
+const LoginModal = ({ onClose, onRegisterClick, prefillEmail = "" }) => {
+  const [email, setEmail] = useState(prefillEmail); // Pre-fill with email if provided
   const [password, setPassword] = useState("");
-  const [showForgotPassword, setShowForgotPassword] = useState(false); // Manage Forgot Password State
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Login successful!");
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.location.reload();
+      } else {
+        alert(data.error || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Something went wrong!");
+    }
+
     onClose();
   };
 
-  // If Forgot Password is clicked, show ForgotPassword Component 
   if (showForgotPassword) {
     return <ForgotPassword onClose={() => setShowForgotPassword(false)} />;
   }
@@ -22,8 +40,6 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 relative">
-        
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
@@ -31,12 +47,9 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
           ✖
         </button>
 
-        {/* Login Header */}
         <h2 className="text-3xl font-bold text-center mb-6 text-blue-700">LOGIN</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          
-          {/* Email */}
           <div className="flex items-center border rounded-lg px-4 py-3 bg-gray-100">
             <FaEnvelope className="text-red-500 mr-3" />
             <input
@@ -49,7 +62,6 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
             />
           </div>
 
-          {/* Password */}
           <div className="flex items-center border rounded-lg px-4 py-3 bg-gray-100">
             <FaLock className="text-blue-500 mr-3" />
             <input
@@ -62,7 +74,6 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
             />
           </div>
 
-          {/* Forgot Password */}
           <div className="text-right">
             <button
               type="button"
@@ -73,7 +84,6 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
             </button>
           </div>
 
-          {/* Login Button */}
           <div className="flex justify-center">
             <button
               type="submit"
@@ -83,7 +93,6 @@ const LoginModal = ({ onClose, onRegisterClick }) => {
             </button>
           </div>
 
-          {/* Register Link */}
           <div className="text-center text-sm mt-4">
             <span>Don't have an account? </span>
             <button
