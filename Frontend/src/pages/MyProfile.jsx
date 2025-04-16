@@ -22,7 +22,7 @@ const MyProfile = () => {
     if (!loggedInUser) return;
 
     const formData = new FormData();
-    formData.append("id", loggedInUser.id);
+    formData.append("id", loggedInUser.id); // 👈 ID pass kar rahe hain
     formData.append("username", newUsername);
     if (newProfileImage) {
       formData.append("profile_image", newProfileImage);
@@ -54,13 +54,38 @@ const MyProfile = () => {
     }
   };
 
-  if (!loggedInUser) return <div className="text-center text-blue-600">Loading...</div>;
+  // Handle delete account
+  const handleDeleteAccount = async () => {
+    if (!loggedInUser) return;
+
+    const confirmed = window.confirm("Are you sure you want to delete your account?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/auth/deleteAccount/${loggedInUser.id}`, {
+          method: "DELETE",
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert("Account deleted successfully!");
+          localStorage.removeItem("user");
+          window.location.href = "/login"; // Redirect to login page or home page
+        } else {
+          alert(data.error || "Failed to delete account");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong!");
+      }
+    }
+  };
+
+  if (!loggedInUser) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto p-8">
-      <h2 className="text-4xl font-bold text-center text-blue-600 mb-6">My Profile</h2>
-      <div className="flex flex-col items-center space-y-6 bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
-        {/* Profile Image */}
+    <div className="container mx-auto p-4">
+      <h2 className="text-3xl font-bold text-center text-blue-600">My Profile</h2>
+      <div className="flex flex-col items-center mt-6">
         <img
           src={
             newProfileImage
@@ -68,35 +93,29 @@ const MyProfile = () => {
               : loggedInUser.profile_image
           }
           alt="Profile"
-          className="w-32 h-32 rounded-full mb-4 border-4 border-blue-500"
+          className="w-32 h-32 rounded-full mb-4"
         />
-
-        {/* Profile Image Upload */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleProfileImageChange}
-          className="border border-gray-300 rounded-md p-2"
-        />
-
-        {/* Username */}
-        <div className="flex items-center space-x-2 mb-6">
-          <FaUser className="text-gray-500 text-xl" />
+        <input type="file" accept="image/*" onChange={handleProfileImageChange} className="mb-4" />
+        <div className="flex items-center mb-4">
+          <FaUser className="text-gray-500 mr-2" />
           <input
             type="text"
             value={newUsername}
             onChange={(e) => setNewUsername(e.target.value)}
-            className="border border-gray-300 p-2 rounded-md w-full"
+            className="border p-2 rounded"
             placeholder="Enter new username"
           />
         </div>
-
-        {/* Save Changes Button */}
-        <button
-          onClick={handleSaveChanges}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-        >
+        <button onClick={handleSaveChanges} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           Save Changes
+        </button>
+
+        {/* Delete Account Button */}
+        <button
+          onClick={handleDeleteAccount}
+          className="bg-red-500 text-white px-4 py-2 mt-4 rounded-lg hover:bg-red-700"
+        >
+          Delete Account
         </button>
       </div>
     </div>
