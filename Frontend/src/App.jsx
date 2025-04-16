@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import BlogDetails from './pages/BlogDetails';
 import SavedBlogs from './pages/SavedBlogs';
+import MyProfile from "./pages/MyProfile"; 
 
 
 const App = () => {
@@ -23,6 +24,8 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/saved-blogs" element={<SavedBlogs />} />
+          {/* MyProfile route */}
+          <Route path="/my-profile" element={<MyProfile />} />
         </Routes>
       </div>
       <Footer />
