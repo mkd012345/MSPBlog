@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -11,13 +11,20 @@ import SavedBlogs from './pages/SavedBlogs';
 import MyProfile from "./pages/MyProfile";
 import MyBlog from './pages/MyBlog';
 import EditBlog from './pages/EditBlog';
-
-
+import AdminLogin from './pages/AdminLogin';
+import AdminPanel from './pages/AdminPanel';
 
 const App = () => {
+  const location = useLocation();
+  
+  // Check if the current path is either Admin Login or Admin Panel
+  const isAdminPage = location.pathname === '/admin-login' || location.pathname === '/admin';
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      {/* Render Navbar and Footer only if not on Admin pages */}
+      {!isAdminPage && <Navbar />}
+      
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -32,10 +39,17 @@ const App = () => {
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/my-blog" element={<MyBlog />} />
           <Route path="/edit-blog/:id" element={<EditBlog />} />
-
+          
+          {/* Admin Login Route */}
+          <Route path="/admin-login" element={<AdminLogin />} />
+          
+          {/* Admin Panel Route */}
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </div>
-      <Footer />
+
+      {/* Render Footer only if not on Admin pages */}
+      {!isAdminPage && <Footer />}
     </div>
   );
 };
