@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Contact = () => {
-  // State for form fields
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -9,17 +9,53 @@ const Contact = () => {
     subject: "",
   });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    alert("Form submitted successfully!");
+
+    // Check if user is logged in (token exists)
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to send a message.");
+      return;
+    }
+
+    // Prepare data for backend (no need to send 'from' email)
+    const contactData = {
+      subject: formData.subject,
+      message: `${formData.firstName} ${formData.lastName} from ${formData.country} says:\n\n${formData.subject}`,
+      country: formData.country,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/contact",
+        contactData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Send token to backend
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Form submitted successfully!");
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          country: "India",
+          subject: "",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send message.");
+    }
   };
 
   return (
