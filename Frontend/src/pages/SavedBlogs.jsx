@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 
 const SavedBlogs = () => {
   const [bookmarks, setBookmarks] = useState([]);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userId = currentUser?.id;
 
   useEffect(() => {
-    const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    const savedBookmarks = JSON.parse(localStorage.getItem(`bookmarks_${userId}`)) || [];
     setBookmarks(savedBookmarks);
-  }, []);
+  }, [userId]);
 
   return (
     <div className="p-6">
@@ -18,12 +20,16 @@ const SavedBlogs = () => {
           bookmarks.map((blog) => (
             <div key={blog.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-2">
               <Link to={`/blog/${blog.id}`} className="block">
-                <img src={blog.img} alt={blog.name} className="w-full h-52 object-cover rounded-t-lg" />
+                <img
+                  src={`http://localhost:5000/uploads/${blog.image}`}
+                  alt={blog.title}
+                  className="w-full h-52 object-cover rounded-t-lg"
+                />
                 <div className="p-4">
-                  <h3 className="text-lg font-bold">{blog.name}</h3>
-                  <p className="text-gray-600">{blog.content}</p>
+                  <h3 className="text-lg font-bold">{blog.title}</h3>
+                  <p className="text-gray-600 line-clamp-3">{blog.content}</p>
                   <div className="mt-2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm inline-block">
-                    {blog.tag}
+                    {blog.category || "General"}
                   </div>
                 </div>
               </Link>
