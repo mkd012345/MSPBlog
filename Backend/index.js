@@ -6,6 +6,7 @@ const app = express();
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require('./routes/blogRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 // Middleware
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve uploaded files
 app.use("/api/auth", authRoutes);
 app.use('/api/blogs', blogRoutes);
+app.use('/api/admin', adminRoutes); // API route for admin functionalities
 
 // Start the server
 const PORT = 5000;
