@@ -12,12 +12,11 @@ const Blogs = () => {
   const blogsPerPage = 6;
 
   useEffect(() => {
-    // Fetch blogs from backend
     const fetchBlogs = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/blogs");
-        console.log("Fetched Blogs:", res.data);  // Check console for the response
-        setBlogs(res.data); // expecting array of blog objects
+        console.log("Fetched Blogs:", res.data);
+        setBlogs(res.data);
       } catch (err) {
         console.error("Error fetching blogs", err);
       }
@@ -42,7 +41,6 @@ const Blogs = () => {
     localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
   };
 
-  // Filtered blogs based on search and category
   const filteredBlogs = blogs
     .filter(
       (item) =>
@@ -71,7 +69,7 @@ const Blogs = () => {
         </Link>
       </div>
 
-      {/* Categories (dynamic based on blog data) */}
+      {/* Categories */}
       <div className="flex flex-wrap gap-3 mb-6">
         {["All", ...new Set(blogs.map((blog) => blog.category).filter(Boolean))].map((cat) => (
           <button
@@ -113,8 +111,13 @@ const Blogs = () => {
                 alt={blog.title}
                 className="w-full h-52 object-cover rounded-t-lg"
               />
-              <div className="p-4">
-                <h3 className="text-lg font-bold">{blog.title}</h3>
+              <div className="p-4 relative">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-bold">{blog.title}</h3>
+                  <span className="text-sm text-gray-500 italic">
+                    by {blog.author_name || "Unknown"}
+                  </span>
+                </div>
                 <p className="text-gray-600 line-clamp-3">{blog.content}</p>
                 <div className="mt-2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm inline-block">
                   {blog.category || "General"}
