@@ -1,3 +1,4 @@
+// controllers/blogController.js
 const db = require("../db");
 
 // Create a new blog
@@ -6,7 +7,6 @@ exports.createBlog = async (req, res) => {
     const { title, content, user_id, category } = req.body;
     const image = req.file ? req.file.filename : null;
 
-    // Log received data for debugging
     console.log('Received blog data:', { title, content, user_id, category, image });
 
     const result = await db.query(
@@ -26,9 +26,21 @@ exports.createBlog = async (req, res) => {
 exports.getBlogs = async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM blogs ORDER BY created_at DESC");
-    res.status(200).json(result.rows); // Return array of blogs
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error("Error fetching blogs:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+};
+
+// Fetch blogs by user ID
+exports.getBlogsByUser = async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const result = await db.query("SELECT * FROM blogs WHERE user_id = $1 ORDER BY created_at DESC", [user_id]);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error fetching user's blogs:", error);
     res.status(500).json({ success: false, error: "Something went wrong" });
   }
 };
@@ -40,7 +52,6 @@ exports.getBlogById = async (req, res) => {
     const result = await db.query('SELECT * FROM blogs WHERE id = $1', [id]);
     if (result.rows.length > 0) {
       const blog = result.rows[0];
-      // Send the full image URL in the response
       blog.imageUrl = `/uploads/${blog.image}`;
       res.json(blog);
     } else {
@@ -49,5 +60,69 @@ exports.getBlogById = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching blog' });
+  }
+};
+
+
+// Fetch all blogs with author name
+exports.getBlogs = async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT blogs.*, users.username AS author_name
+      FROM blogs
+      JOIN users ON blogs.user_id = users.id
+      ORDER BY blogs.created_at DESC
+    `);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+};
+
+
+// Delete a blog by ID
+exports.deleteBlogById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.query("DELETE FROM blogs WHERE id = $1 RETURNING *", [id]);
+    if (result.rows.length > 0) {
+      res.status(200).json({ success: true, message: "Blog deleted successfully" });
+    } else {
+      res.status(404).json({ success: false, message: "Blog not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+};
+
+/// Update a blog by ID
+exports.updateBlogById = async (req, res) => {
+  const { id } = req.params;
+  const { title, content, category } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  try {
+    let query, values;
+
+    if (image) {
+      query = "UPDATE blogs SET title = $1, content = $2, category = $3, image = $4 WHERE id = $5 RETURNING *";
+      values = [title, content, category, image, id];
+    } else {
+      query = "UPDATE blogs SET title = $1, content = $2, category = $3 WHERE id = $4 RETURNING *";
+      values = [title, content, category, id];
+    }
+
+    const result = await db.query(query, values);
+
+    if (result.rows.length > 0) {
+      res.status(200).json({ success: true, blog: result.rows[0] });
+    } else {
+      res.status(404).json({ success: false, message: "Blog not found" });
+    }
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
   }
 };
