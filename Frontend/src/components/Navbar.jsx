@@ -62,7 +62,6 @@ const Navbar = () => {
           <Link to="/blogs" className="text-black hover:text-blue-500">BLOGS</Link>
           <Link to="/CreateBlog" className="text-black hover:text-blue-500">CREATE-BLOG</Link>
           <Link to="/about" className="text-black hover:text-blue-500">ABOUT</Link>
-          <Link to="/contact" className="text-black hover:text-blue-500">CONTACT</Link>
         </div>
 
         {/* Right section */}
