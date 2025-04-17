@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';  // Import useParams for dynamic routing
 import { FaHeart, FaRegComment, FaSun, FaMoon } from 'react-icons/fa';
 import {
   FacebookShareButton,
@@ -14,21 +15,51 @@ import {
   WhatsappIcon,
   EmailIcon
 } from 'react-share';
+import axios from 'axios';
 
 const BlogDetails = () => {
+  const [blog, setBlog] = useState(null); // To store the fetched blog data
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // ✅ Handle Like button
+  // Get the blog ID from the URL
+  const { id } = useParams();
+
+  // Fetch the blog data by ID when the component mounts
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        // Add a console log to debug the request
+        console.log(`Fetching blog data for ID: ${id}`);
+        const response = await axios.get(`http://localhost:5000/api/blogs/${id}`);
+        
+        // Check if the response contains the expected data
+        console.log('Response data:', response.data);
+        
+        if (response.data) {
+          setBlog(response.data); // Set the fetched blog data
+        } else {
+          console.error('No data found for this blog');
+        }
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+        alert('Error loading blog. Please try again later.');
+      }
+    };
+
+    fetchBlog();
+  }, [id]);
+
+  // Handle Like button
   const handleLike = () => {
     setLikes(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
   };
 
-  // ✅ Handle Comment Submission
+  // Handle Comment Submission
   const handleCommentSubmit = () => {
     if (newComment.trim()) {
       const timestamp = new Date().toLocaleString();
@@ -42,22 +73,24 @@ const BlogDetails = () => {
     }
   };
 
-  // ✅ Toggle Dark/Light Mode
+  // Toggle Dark/Light Mode
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  // ✅ Share URL & Title
+  // Share URL & Title
   const shareUrl = window.location.href; 
-  const title = "Check out this amazing blog on MSPBlog!";
+  const title = blog ? blog.title : "Check out this amazing blog on MSPBlog!";
+
+  if (!blog) {
+    return <div>Loading...</div>; // Show loading text while fetching the blog data
+  }
 
   return (
     <div className={`min-h-screen p-10 transition duration-300 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
-      
-      {/* ✅ Header Section */}
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-10">
-          <h1 className="text-5xl font-extrabold tracking-tight">Mahabharat</h1>
+          <h1 className="text-5xl font-extrabold tracking-tight">{blog.title}</h1>
           <button
             onClick={toggleDarkMode}
             className="flex items-center gap-2 bg-blue-500 text-white px-5 py-3 rounded-full hover:bg-blue-600 transition transform hover:scale-105 shadow-lg"
@@ -67,42 +100,31 @@ const BlogDetails = () => {
           </button>
         </div>
 
-        {/* ✅ Author Section */}
         <div className="flex items-center gap-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
           <img
-            src="/images/user.png"
+            src={blog.authorImage || '/images/user.png'}
             alt="Author"
             className="w-20 h-20 rounded-full border-4 border-blue-500 shadow-lg"
           />
           <div>
-            <p className="font-bold text-xl">Manthan Kr</p>
-            <p className="text-sm text-gray-500">{new Date().toLocaleDateString()}</p>
+            <p className="font-bold text-xl">{blog.authorName}</p>
+            <p className="text-sm text-gray-500">{new Date(blog.createdAt).toLocaleDateString()}</p>
           </div>
         </div>
 
-        {/* ✅ Blog Image */}
         <div className="mt-10">
           <img
-            src="/images/mahabharat.jpg"
-            alt="Mahabharat Image"
+            src={`http://localhost:5000${blog.imageUrl}`} // Updated to use the correct image URL from backend
+            alt={blog.title}
             className="w-full h-[600px] object-cover rounded-xl shadow-lg transition transform hover:scale-105"
           />
         </div>
 
-        {/* ✅ Blog Content */}
         <div className={`mt-12 p-10 rounded-lg shadow-lg transition ${isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-white text-gray-900'}`}>
-          <h2 className="text-3xl font-bold mb-4">The Mahabharata</h2>
-          <p className="leading-relaxed text-lg">
-            The Mahabharata is one of the two major Sanskrit epics of ancient India.
-            It narrates the events of the Kurukshetra War, a war of succession between
-            two groups of princely cousins, the Kauravas and the Pandavas.
-          </p>
-          <p className="leading-relaxed text-lg mt-6">
-            It also contains philosophical and devotional material, including the Bhagavad Gita.
-          </p>
+          <h2 className="text-3xl font-bold mb-4">{blog.title}</h2>
+          <p className="leading-relaxed text-lg">{blog.content}</p>
         </div>
 
-        {/* ✅ Like & Comment Section */}
         <div className="flex justify-between items-center mt-12">
           <button
             onClick={handleLike}
@@ -118,7 +140,6 @@ const BlogDetails = () => {
           </div>
         </div>
 
-        {/* ✅ Comment Input */}
         <div className="mt-10">
           <h3 className="text-2xl font-bold mb-4">Leave a Comment</h3>
           <div className="flex gap-4">
@@ -138,7 +159,6 @@ const BlogDetails = () => {
           </div>
         </div>
 
-        {/* ✅ Comment List */}
         <ul className="mt-8 space-y-6">
           {comments.map((comment, index) => (
             <li
@@ -152,7 +172,6 @@ const BlogDetails = () => {
           ))}
         </ul>
 
-        {/* ✅ Share Section */}
         <div className="mt-12">
           <h3 className="text-3xl font-bold mb-6">Share this blog</h3>
           <div className="flex gap-6">
