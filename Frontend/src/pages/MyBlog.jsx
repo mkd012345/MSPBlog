@@ -27,7 +27,7 @@ const MyBlog = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/blogs/${id}`);
-      setBlogs(blogs.filter((blog) => blog.id !== id)); // Remove deleted blog from state
+      setBlogs(blogs.filter((blog) => blog.id !== id));
     } catch (err) {
       console.error("Error deleting blog:", err);
     }
@@ -43,31 +43,36 @@ const MyBlog = () => {
       {blogs.length === 0 ? (
         <p>No blogs found!</p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map((blog) => (
             <div
               key={blog.id}
-              className="bg-white shadow-md p-4 rounded-lg border border-gray-300"
+              className="bg-white shadow-lg rounded-xl border border-gray-200 overflow-hidden flex flex-col justify-between"
             >
-              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-              <p className="text-gray-600 mb-2">{blog.content}</p>
-              {blog.image && (
-                <img
-                  src={`http://localhost:5000/uploads/${blog.image}`}
-                  alt="Blog"
-                  className="w-full h-48 object-cover rounded-md mb-2"
-                />
-              )}
-              <div className="flex justify-between mt-4">
+              <div className="p-4">
+                <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
+                <p className="text-gray-700 text-sm line-clamp-3 mb-3">
+                  {blog.content}
+                </p>
+                {blog.image && (
+                  <img
+                    src={`http://localhost:5000/uploads/${blog.image}`}
+                    alt="Blog"
+                    className="w-full h-48 object-cover rounded-lg mb-3"
+                  />
+                )}
+              </div>
+
+              <div className="flex justify-between px-4 pb-4 mt-auto">
                 <button
                   onClick={() => handleEdit(blog.id)}
-                  className="bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 text-white text-sm py-1 px-4 rounded-lg hover:bg-blue-600 transition"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(blog.id)}
-                  className="bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-600"
+                  className="bg-red-500 text-white text-sm py-1 px-4 rounded-lg hover:bg-red-600 transition"
                 >
                   Delete
                 </button>
