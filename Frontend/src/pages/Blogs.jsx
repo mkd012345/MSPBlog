@@ -11,11 +11,13 @@ const Blogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")); // assuming login info is stored like this
+  const userId = currentUser?.id;
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/blogs");
-        console.log("Fetched Blogs:", res.data);
         setBlogs(res.data);
       } catch (err) {
         console.error("Error fetching blogs", err);
@@ -23,9 +25,10 @@ const Blogs = () => {
     };
 
     fetchBlogs();
-    const savedBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+    const savedBookmarks = JSON.parse(localStorage.getItem(`bookmarks_${userId}`)) || [];
     setBookmarks(savedBookmarks);
-  }, []);
+  }, [userId]);
 
   const toggleBookmark = (blog) => {
     let updatedBookmarks;
@@ -38,7 +41,7 @@ const Blogs = () => {
     }
 
     setBookmarks(updatedBookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
+    localStorage.setItem(`bookmarks_${userId}`, JSON.stringify(updatedBookmarks));
   };
 
   const filteredBlogs = blogs
@@ -58,7 +61,6 @@ const Blogs = () => {
 
   return (
     <div className="p-6">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Explore Blogs</h1>
         <Link
@@ -69,7 +71,6 @@ const Blogs = () => {
         </Link>
       </div>
 
-      {/* Categories */}
       <div className="flex flex-wrap gap-3 mb-6">
         {["All", ...new Set(blogs.map((blog) => blog.category).filter(Boolean))].map((cat) => (
           <button
@@ -89,7 +90,6 @@ const Blogs = () => {
         ))}
       </div>
 
-      {/* Search */}
       <input
         type="text"
         placeholder="Search blogs..."
@@ -98,7 +98,6 @@ const Blogs = () => {
         className="w-full p-2 border rounded-lg mb-4"
       />
 
-      {/* Blog Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentBlogs.map((blog) => (
           <div
@@ -139,7 +138,6 @@ const Blogs = () => {
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center items-center mt-6">
         {Array.from({ length: totalPages }, (_, i) => (
           <button
