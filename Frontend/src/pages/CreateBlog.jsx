@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // To navigate after successful post
 
 const CreateBlog = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [category, setCategory] = useState("");  // Category state
+  const [category, setCategory] = useState(""); // Category state
+  const [successMessage, setSuccessMessage] = useState(""); // Success message state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const user = JSON.parse(localStorage.getItem("user")); // assuming you saved user object here
+
+    const user = JSON.parse(localStorage.getItem("user")); // Assuming you saved user object here
     const user_id = user?.id;
-  
+
     if (!user_id) {
       alert("⚠️ User not logged in.");
       return;
@@ -23,33 +26,33 @@ const CreateBlog = () => {
       alert("⚠️ Please select a category.");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
     formData.append("image", image);
-    formData.append("user_id", user_id); // send user_id
-    formData.append("category", category);  // Send the category field
-  
+    formData.append("user_id", user_id); // Send user_id
+    formData.append("category", category); // Send the category field
+
     try {
       const res = await axios.post("http://localhost:5000/api/blogs/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       console.log("Blog created:", res.data);
-      alert("✅ Blog published successfully!");
+      setSuccessMessage("✅ Blog published successfully!"); // Set success message
       setTitle("");
       setContent("");
       setImage(null);
-      setCategory('');  // Reset category after submission
+      setCategory(""); // Reset category after submission
     } catch (err) {
       console.error("Error creating blog:", err.response?.data || err.message);
       alert("❌ Error creating blog.");
     }
   };
-  
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -60,6 +63,11 @@ const CreateBlog = () => {
     } else {
       setPreview(null);
     }
+  };
+
+  const handleSuccessMessageClose = () => {
+    setSuccessMessage(""); // Clear success message
+    navigate("/blogs"); // Redirect to "My Blogs" page
   };
 
   return (
@@ -110,9 +118,9 @@ const CreateBlog = () => {
             {/* Category dropdown */}
             <div className="form-group">
               <label>Category</label>
-              <select 
-                value={category} 
-                onChange={(e) => setCategory(e.target.value)} 
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 className="form-control w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
               >
                 <option value="">Select Category</option>
@@ -134,6 +142,19 @@ const CreateBlog = () => {
           </form>
         </div>
       </div>
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-green-500 text-white p-4 text-center">
+          <p>{successMessage}</p>
+          <button
+            onClick={handleSuccessMessageClose}
+            className="mt-2 bg-white text-green-500 py-1 px-4 rounded-lg"
+          >
+            OK
+          </button>
+        </div>
+      )}
     </div>
   );
 };
