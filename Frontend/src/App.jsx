@@ -26,6 +26,7 @@ const App = () => {
           <Route path="/saved-blogs" element={<SavedBlogs />} />
           {/* MyProfile route */}
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/blog/:id" element={<BlogDetails />} />
         </Routes>
       </div>
       <Footer />
