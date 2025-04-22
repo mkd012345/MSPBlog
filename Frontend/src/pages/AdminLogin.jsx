@@ -7,8 +7,8 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   // Static login credentials
-  const adminEmail = 'admin@example.com';
-  const adminPassword = 'admin123';
+  const adminEmail = 'admin@gmail.com';
+  const adminPassword = 'admin@123';
 
   const handleLogin = (e) => {
     e.preventDefault();
