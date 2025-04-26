@@ -37,7 +37,7 @@ const Contact = () => {
         contactData,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Send token to backend
+            Authorization: `Bearer ${token}`, 
           },
         }
       );

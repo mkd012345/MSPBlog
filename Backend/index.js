@@ -17,7 +17,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve u
 app.use("/api/auth", authRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/admin', adminRoutes); // API route for admin functionalities
-app.use("/api", contactRoutes);
+app.use("/api/contact", contactRoutes);
 
 // Start the server
 const PORT = 5000;
